@@ -1,0 +1,41 @@
+MIME-Version: 1.0
+Date: Sun, 27 Apr 2025 20:27:21 -0500
+Message-ID: <CABsDZVEYboFemP1hQrxJHpPkUKZFXe2LC8ODFqGwO+wQuA9xOA@mail.gmail.com>
+Subject: test
+From: Ricardo Cotillo <ricardo.cotillo@gmail.com>
+To: Ricardo Cotillo <ricardo.cotillo@gmail.com>
+Content-Type: multipart/mixed; boundary="000000000000e63c0f0633cc95af"
+
+--000000000000e63c0f0633cc95af
+Content-Type: multipart/alternative; boundary="000000000000e63c0d0633cc95ad"
+
+--000000000000e63c0d0633cc95ad
+Content-Type: text/plain; charset="UTF-8"
+
+this is a test email
+
+--000000000000e63c0d0633cc95ad
+Content-Type: text/html; charset="UTF-8"
+
+<div dir="ltr">this is a test email</div>
+
+--000000000000e63c0d0633cc95ad--
+--000000000000e63c0f0633cc95af
+Content-Type: application/json; name="test.json"
+Content-Disposition: attachment; filename="test.json"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_ma0eeod10
+Content-ID: <f_ma0eeod10>
+
+ewogICAgIm5hbWUiOiAiVGVzdCBVc2VyIiwKICAgICJhZ2UiOiAzMCwKICAgICJpc19hY3RpdmUi
+OiB0cnVlLAogICAgImVtYWlsIjogInRlc3QudXNlckBleGFtcGxlLmNvbSIsCiAgICAicHJlZmVy
+ZW5jZXMiOiB7CiAgICAgICJub3RpZmljYXRpb25zIjogdHJ1ZSwKICAgICAgInRoZW1lIjogImRh
+cmsiLAogICAgICAibGFuZ3VhZ2VzIjogWyJFbmdsaXNoIiwgIlNwYW5pc2giLCAiRnJlbmNoIl0K
+ICAgIH0sCiAgICAicG9zdHMiOiBbCiAgICAgIHsKICAgICAgICAiaWQiOiAxLAogICAgICAgICJ0
+aXRsZSI6ICJIZWxsbyBXb3JsZCIsCiAgICAgICAgImNvbnRlbnQiOiAiVGhpcyBpcyB0aGUgZmly
+c3QgcG9zdC4iLAogICAgICAgICJ0YWdzIjogWyJpbnRyb2R1Y3Rpb24iLCAiaGVsbG8iXSwKICAg
+ICAgICAicHVibGlzaGVkIjogdHJ1ZQogICAgICB9LAogICAgICB7CiAgICAgICAgImlkIjogMiwK
+ICAgICAgICAidGl0bGUiOiAiQW5vdGhlciBQb3N0IiwKICAgICAgICAiY29udGVudCI6ICJKdXN0
+IGFub3RoZXIgdGVzdCBwb3N0LiIsCiAgICAgICAgInRhZ3MiOiBbXSwKICAgICAgICAicHVibGlz
+aGVkIjogZmFsc2UKICAgICAgfQogICAgXSwKICAgICJsYXN0X2xvZ2luIjogbnVsbAp9
+--000000000000e63c0f0633cc95af--
