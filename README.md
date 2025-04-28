@@ -40,8 +40,8 @@ src/
     ├── email-file.controller.ts    # Controller for serving email files
     ├── html-page.controller.ts     # Controller for serving HTML page
     ├── test.eml            # Sample email file
-    └── static/             # Static files directory
-        └── email-link.html # HTML template for email link page
+views/
+└── email-link.hbs      # Handlebars template for email link page
 ```
 
 ## Installation
@@ -49,6 +49,9 @@ src/
 ```bash
 # Install dependencies
 $ npm install
+
+# The application uses Handlebars (hbs) for template rendering
+$ npm install --save hbs
 ```
 
 ## Running the Application
@@ -146,7 +149,7 @@ The `EmailFileController` serves a sample email file. It reads the file from the
 
 ### HTML Page Controller
 
-The `HtmlPageController` serves an HTML page with a link to download the email file. The HTML content is read from a template file in the static directory, and placeholders are replaced with dynamic values.
+The `HtmlPageController` serves an HTML page with a link to download the email file. It uses NestJS's built-in template rendering with Handlebars (`@Render()` decorator) to render the view template located in the `views` directory.
 
 ### Module Structure
 
@@ -154,6 +157,10 @@ The application uses NestJS's modular architecture:
 
 - `AppModule`: The main application module that imports all other modules.
 - `EmailModule`: Contains all email-related functionality, including controllers and services.
+
+### Template Rendering
+
+The application uses Handlebars (hbs) as the template engine for rendering views. The templates are stored in the `views` directory at the project root. The main.ts file configures NestJS to use the Handlebars engine and sets the base views directory.
 
 ## Testing
 
