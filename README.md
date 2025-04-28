@@ -1,128 +1,173 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Email Parser NestJS Application
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Overview
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+This NestJS application demonstrates how to parse email content with attachments and extract JSON data. It provides multiple endpoints for serving email files and parsing their contents.
 
-## Description
+## Table of Contents
 
-This is a NestJS application that parses email content with attachments and extracts JSON files. The application uses the mail-parser library to parse email content and provides an API endpoint to retrieve JSON data from emails.
-
-## Project setup
-
-```bash
-$ npm install
-```
+- [Features](#features)
+- [Project Structure](#project-structure)
+- [Installation](#installation)
+- [Running the Application](#running-the-application)
+- [API Documentation](#api-documentation)
+- [Implementation Details](#implementation-details)
 
 ## Features
 
 - Parse email content from a file path or URL
 - Extract JSON data from email attachments
+- Serve email files directly via API
+- Serve HTML page with a link to download email files
 - Support for various JSON locations within an email:
   - As a file attachment
   - Inside the body of the email as a link
   - Inside the body of the email as text
   - Link in the body that leads to a webpage with a link to JSON
 
-## API Usage
+## Project Structure
 
-The application exposes an endpoint to parse emails and extract JSON content:
+```
+src/
+├── app.controller.ts       # Main application controller
+├── app.module.ts           # Main application module
+├── app.service.ts          # Main application service
+├── main.ts                 # Application entry point
+└── email/                  # Email module directory
+    ├── email.module.ts     # Email module definition
+    ├── email-parser.controller.ts  # Controller for parsing emails
+    ├── email-parser.service.ts     # Service for parsing emails
+    ├── email-file.controller.ts    # Controller for serving email files
+    ├── html-page.controller.ts     # Controller for serving HTML page
+    ├── test.eml            # Sample email file
+    └── static/             # Static files directory
+        └── email-link.html # HTML template for email link page
+```
+
+## Installation
+
+```bash
+# Install dependencies
+$ npm install
+```
+
+## Running the Application
+
+```bash
+# Development mode
+$ npm run start
+
+# Watch mode
+$ npm run start:dev
+
+# Production mode
+$ npm run start:prod
+```
+
+## API Documentation
+
+### 1. Parse Email Content
+
+Parse an email file and extract JSON content.
 
 ```http
 GET /email-parser/parse?emailPath=<path_or_url_to_email>
 ```
 
-Example:
+**Parameters:**
+
+- `emailPath` (required): Path to a local email file or URL to a remote email file
+
+**Response:**
+
+The JSON content extracted from the email.
+
+**Example:**
 
 ```http
 GET /email-parser/parse?emailPath=/path/to/email.eml
 ```
 
-Or with a URL:
+```json
+{
+  "name": "John Doe",
+  "age": 30,
+  "email": "john@example.com",
+  "address": {
+    "street": "123 Main St",
+    "city": "Anytown",
+    "state": "CA",
+    "zip": "12345"
+  }
+}
+```
+
+### 2. Download Email File
+
+Download a sample email file.
 
 ```http
-GET /email-parser/parse?emailPath=https://example.com/email.eml
+GET /email-file
 ```
 
-## Compile and run the project
+**Response:**
 
-```bash
-# development
-$ npm run start
+The email file as an attachment with Content-Type: message/rfc822.
 
-# watch mode
-$ npm run start:dev
+### 3. HTML Page with Email Link
 
-# production mode
-$ npm run start:prod
+View an HTML page with a link to download the email file.
+
+```http
+GET /html-page
 ```
 
-## Run tests
+**Response:**
+
+An HTML page containing a link to download the email file and instructions for using the email parser API.
+
+## Implementation Details
+
+### Email Parser Service
+
+The `EmailParserService` is responsible for parsing email content and extracting JSON data. It supports various scenarios:
+
+1. **JSON as a file attachment**: The service checks for attachments with .json extension or application/json content type.
+
+2. **JSON in the email body**: The service searches for JSON content directly in the email body text.
+
+3. **JSON as a link in the email body**: The service extracts links from the email body and checks if any of them point to JSON files.
+
+4. **JSON from linked webpages**: The service follows links in the email body to find webpages that might contain links to JSON files.
+
+### Email File Controller
+
+The `EmailFileController` serves a sample email file. It reads the file from the filesystem and sends it as an attachment with the appropriate MIME type.
+
+### HTML Page Controller
+
+The `HtmlPageController` serves an HTML page with a link to download the email file. The HTML content is read from a template file in the static directory, and placeholders are replaced with dynamic values.
+
+### Module Structure
+
+The application uses NestJS's modular architecture:
+
+- `AppModule`: The main application module that imports all other modules.
+- `EmailModule`: Contains all email-related functionality, including controllers and services.
+
+## Testing
 
 ```bash
-# unit tests
+# Unit tests
 $ npm run test
 
-# e2e tests
+# E2E tests
 $ npm run test:e2e
 
-# test coverage
+# Test coverage
 $ npm run test:cov
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
 ## License
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+This project is [MIT licensed](LICENSE).
