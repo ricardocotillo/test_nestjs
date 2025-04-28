@@ -1,0 +1,28 @@
+{
+    "name": "Test User",
+    "age": 30,
+    "is_active": true,
+    "email": "test.user@example.com",
+    "preferences": {
+      "notifications": true,
+      "theme": "dark",
+      "languages": ["English", "Spanish", "French"]
+    },
+    "posts": [
+      {
+        "id": 1,
+        "title": "Hello World",
+        "content": "This is the first post.",
+        "tags": ["introduction", "hello"],
+        "published": true
+      },
+      {
+        "id": 2,
+        "title": "Another Post",
+        "content": "Just another test post.",
+        "tags": [],
+        "published": false
+      }
+    ],
+    "last_login": null
+}
