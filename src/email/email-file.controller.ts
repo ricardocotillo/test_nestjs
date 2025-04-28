@@ -9,12 +9,12 @@ export class EmailFileController {
 
   constructor() {
     // Path to the test email file
-    this.emailFilePath = path.join(process.cwd(), 'src', 'email', 'test-email.eml');
+    this.emailFilePath = path.join(process.cwd(), 'src', 'email', 'test.eml');
   }
 
   @Get()
   @Header('Content-Type', 'message/rfc822')
-  @Header('Content-Disposition', 'attachment; filename="test-email.eml"')
+  @Header('Content-Disposition', 'attachment; filename="test.eml"')
   serveEmailFile(@Res() res: Response): void {
     try {
       // Check if the file exists
