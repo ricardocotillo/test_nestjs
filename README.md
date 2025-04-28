@@ -49,9 +49,6 @@ views/
 ```bash
 # Install dependencies
 $ npm install
-
-# The application uses Handlebars (hbs) for template rendering
-$ npm install --save hbs
 ```
 
 ## Running the Application
